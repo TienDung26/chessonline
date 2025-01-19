@@ -1,0 +1,36 @@
+/* CSS cho body */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* CSS cho container của điều khoản */
+  .terms-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  /* CSS cho tiêu đề */
+  .terms-container h1 {
+    text-align: center;
+    color: #00c853;
+    font-size: 1.8rem;
+  }
+  
+  /* CSS cho đoạn văn bản */
+  .terms-container p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  

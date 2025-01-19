@@ -1,0 +1,93 @@
+/* Modal yêu cầu nạp VIP */
+.vip-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Tăng độ mờ cho nền */
+    display: none; /* Mặc định ẩn modal */
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Hiệu ứng mờ dần khi mở modal */
+}
+
+.vip-modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 320px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng cho modal */
+    animation: slideIn 0.3s ease-out; /* Hiệu ứng di chuyển modal vào */
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 22px;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.close-modal:hover {
+    color: #ff4d4d; /* Thay đổi màu khi hover */
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333; /* Màu tiêu đề */
+}
+
+.modal-message {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555; /* Màu văn bản */
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.modal-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50; /* Màu nền cho nút */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.modal-button:hover {
+    background-color: #45a049; /* Màu nền thay đổi khi hover */
+}
+
+.modal-button.cancel {
+    background-color: #f44336; /* Màu nền cho nút hủy */
+}
+
+.modal-button.cancel:hover {
+    background-color: #e53935; /* Màu nền thay đổi khi hover */
+}
