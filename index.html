@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trang Web Chơi Game</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Thêm Google API Client Library -->
+  <script src="https://apis.google.com/js/api.js"></script>
 </head>
 <body>
   <header>
@@ -20,43 +22,48 @@
 
       <!-- Thêm nút đăng nhập Google -->
       <button id="google-login">Đăng nhập với Google</button>
+      <div id="user-info"></div> <!-- Chỗ để hiển thị thông tin người dùng -->
     </div>
   </main>
   <footer>
     <p>&copy; 2025. Trang web chơi game thiết kế bởi bạn.</p>
   </footer>
 <script>
-    // Hàm lấy tham số từ URL
-    function getUrlParameter(name) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(name);
-    }
-
-    // Lấy access token từ URL
-    const accessToken = getUrlParameter('access_token');
-    
-    // Kiểm tra xem có access token hay không
-    if (accessToken) {
-      // Sử dụng access token để lấy thông tin người dùng
-      fetch('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + accessToken)
-        .then(response => response.json())
-        .then(data => {
-          // Hiển thị thông tin người dùng
-          document.getElementById('user-info').innerHTML = `
-            <strong>Đăng nhập thành công!</strong><br>
-            <strong>Họ và tên:</strong> ${data.name} <br>
-            <strong>Email:</strong> ${data.email} <br>
-            <strong>Hình đại diện:</strong><br> 
-            <img src="${data.picture}" alt="User Avatar" width="100">
-          `;
-        })
-        .catch(error => {
-          console.error('Lỗi khi lấy thông tin người dùng:', error);
-          alert('Lỗi khi lấy thông tin người dùng.');
+  // Cấu hình API Client của Google
+  function startApp() {
+    gapi.client.init({
+      'apiKey': 'AIzaSyAqgg3YPbrApFsoeY4QYAEIyM8wYw6Sp1k',  // Thêm API Key của bạn vào đây
+      'clientId': '498561695464-2vdic2jdo2u04vvsqj3evck627js15vu.apps.googleusercontent.com', // Thêm Client ID của bạn vào đây
+      'scope': 'openid profile email',  // Các scope yêu cầu quyền truy cập vào thông tin người dùng
+      'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/oauth2/v2/rest'],
+    }).then(function() {
+      const googleLoginButton = document.getElementById('google-login');
+      googleLoginButton.addEventListener('click', function() {
+        gapi.auth2.getAuthInstance().signIn().then(function(googleUser) {
+          // Lấy access token từ googleUser
+          const accessToken = googleUser.getAuthResponse().access_token;
+          fetch('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + accessToken)
+            .then(response => response.json())
+            .then(data => {
+              document.getElementById('user-info').innerHTML = `
+                <strong>Đăng nhập thành công!</strong><br>
+                <strong>Họ và tên:</strong> ${data.name} <br>
+                <strong>Email:</strong> ${data.email} <br>
+                <strong>Hình đại diện:</strong><br> 
+                <img src="${data.picture}" alt="User Avatar" width="100">
+              `;
+            })
+            .catch(error => {
+              console.error('Lỗi khi lấy thông tin người dùng:', error);
+              alert('Lỗi khi lấy thông tin người dùng.');
+            });
         });
-    } else {
-      alert('Không có access token. Đăng nhập không thành công.');
-    }
-  </script>
+      });
+    });
+  }
+
+  // Tải Google API Client Library
+  gapi.load('client:auth2', startApp);
+</script>
 </body>
 </html>
