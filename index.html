@@ -25,29 +25,37 @@
   <footer>
     <p>&copy; 2025. Trang web chơi game thiết kế bởi bạn.</p>
   </footer>
+<script>
+    // Hàm lấy tham số từ URL
+    function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
 
-  <script>
-    // Kiểm tra nếu có access_token từ URL
-    const urlParams = new URLSearchParams(window.location.hash.substring(1)); // Lấy thông tin sau dấu #
-    const accessToken = urlParams.get('access_token'); // Token truy cập từ Google
-
+    // Lấy access token từ URL
+    const accessToken = getUrlParameter('access_token');
+    
+    // Kiểm tra xem có access token hay không
     if (accessToken) {
-      // Nếu có access token, hiển thị thông tin người dùng
-      fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        // Hiển thị thông tin người dùng hoặc lưu trữ thông tin cần thiết
-        alert(`Chào mừng, ${data.name}!`);
-        console.log('Thông tin người dùng:', data);
-      })
-      .catch(error => {
-        console.error('Lỗi khi lấy thông tin người dùng:', error);
-        alert('Đã xảy ra lỗi khi lấy thông tin người dùng.');
-      });
+      // Sử dụng access token để lấy thông tin người dùng
+      fetch('https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + accessToken)
+        .then(response => response.json())
+        .then(data => {
+          // Hiển thị thông tin người dùng
+          document.getElementById('user-info').innerHTML = `
+            <strong>Đăng nhập thành công!</strong><br>
+            <strong>Họ và tên:</strong> ${data.name} <br>
+            <strong>Email:</strong> ${data.email} <br>
+            <strong>Hình đại diện:</strong><br> 
+            <img src="${data.picture}" alt="User Avatar" width="100">
+          `;
+        })
+        .catch(error => {
+          console.error('Lỗi khi lấy thông tin người dùng:', error);
+          alert('Lỗi khi lấy thông tin người dùng.');
+        });
+    } else {
+      alert('Không có access token. Đăng nhập không thành công.');
     }
   </script>
 </body>
