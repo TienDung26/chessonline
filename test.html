@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang Web Chơi Game</title>
+  <script>
+    function checkVIP() {
+      return localStorage.getItem("hasVIP") === "true"; // Kiểm tra trạng thái VIP
+    }
+
+    window.onload = function() {
+      if (!checkVIP()) {
+        window.location.href = "checkvip.html"; // Chuyển hướng nếu không có VIP
+      }
+    };
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>🎮 Welcome 🎮</h1>
+    <p>Thử thách bản thân và giải trí ngay!</p>
+  </header>
+  <main>
+    <div id="game-container">
+      <h2>Bắt đầu chơi</h2>
+      <p>Nhấn vào nút dưới đây để bắt đầu trò chơi thú vị của bạn!</p>
+      <button id="start-game">Bắt đầu Chơi</button>
+      <div id="game-area"></div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2025. Trang web chơi game thiết kế bởi bạn.</p>
+  </footer>
+</body>
+</html>
