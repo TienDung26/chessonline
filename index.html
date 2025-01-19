@@ -17,10 +17,38 @@
       <p>Nhấn vào nút dưới đây để bắt đầu trò chơi thú vị của bạn!</p>
       <button id="start-game">Bắt đầu Chơi</button>
       <div id="game-area"></div>
+
+      <!-- Thêm nút đăng nhập Google -->
+      <button id="google-login">Đăng nhập với Google</button>
     </div>
   </main>
   <footer>
     <p>&copy; 2025. Trang web chơi game thiết kế bởi bạn.</p>
   </footer>
+
+  <script>
+    // Kiểm tra nếu có access_token từ URL
+    const urlParams = new URLSearchParams(window.location.hash.substring(1)); // Lấy thông tin sau dấu #
+    const accessToken = urlParams.get('access_token'); // Token truy cập từ Google
+
+    if (accessToken) {
+      // Nếu có access token, hiển thị thông tin người dùng
+      fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Hiển thị thông tin người dùng hoặc lưu trữ thông tin cần thiết
+        alert(`Chào mừng, ${data.name}!`);
+        console.log('Thông tin người dùng:', data);
+      })
+      .catch(error => {
+        console.error('Lỗi khi lấy thông tin người dùng:', error);
+        alert('Đã xảy ra lỗi khi lấy thông tin người dùng.');
+      });
+    }
+  </script>
 </body>
 </html>
